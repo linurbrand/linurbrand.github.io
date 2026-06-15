@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бренд-разбор стоматологии</title>
+<style>
+  :root{
+    --bg:#f4f5f5; --card:#ffffff; --soft:#e9ecec;
+    --ink:#0c0f0f; --dim:#56625f; --mute:#98a3a0;
+    --border:rgba(0,0,0,.07);
+    --accent:#0f5e57; --accent-d:#0a4a44; --accent-bg:#eef4f3;
+    --dark:#0c1413;
+    --r:22px; --r-sm:15px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:-apple-system,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55; letter-spacing:-.011em; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:740px; margin:0 auto; padding:0 20px}
+
+  /* HERO — плотный тёмный, без дешёвого градиента */
+  .hero{background:var(--dark); color:#fff; border-radius:0 0 34px 34px; padding:58px 0 54px; position:relative; overflow:hidden}
+  .hero::before{content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,transparent,var(--accent) 40%,#1f8d82 60%,transparent)}
+  .hero .eyebrow{font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:#5fb3a9; margin-bottom:20px}
+  .hero h1{font-size:43px; line-height:1.1; font-weight:740; letter-spacing:-.035em; margin-bottom:18px}
+  .hero p{font-size:17px; color:#aebbb8; max-width:90%; line-height:1.55}
+  .hero .cta-row{margin-top:32px; display:flex; align-items:center; gap:20px; flex-wrap:wrap}
+  .btn{display:inline-flex; align-items:center; gap:9px; background:var(--accent); color:#fff;
+    font-size:16px; font-weight:600; padding:17px 32px; border-radius:100px; text-decoration:none;
+    box-shadow:0 12px 28px -10px rgba(15,94,87,.6); transition:transform .12s}
+  .btn:active{transform:translateY(1px)}
+  .btn.light{background:#fff; color:var(--accent-d)}
+  .price-chip{font-size:15px; color:#c4d0cd}
+  .price-chip b{color:#fff; font-weight:700}
+
+  section{margin:48px 0}
+  .eyebrow{font-size:12px; text-transform:uppercase; letter-spacing:.14em; font-weight:700; color:var(--accent); margin-bottom:12px}
+  h2{font-size:28px; font-weight:740; letter-spacing:-.03em; margin-bottom:22px; line-height:1.14}
+
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .tile{background:var(--card); border:1px solid var(--border); border-radius:var(--r);
+    padding:24px; box-shadow:0 1px 1px rgba(0,0,0,.02), 0 18px 40px -30px rgba(12,20,19,.3)}
+  .tile .n{width:32px;height:32px;border-radius:10px;background:var(--accent-bg);color:var(--accent-d);
+    display:flex;align-items:center;justify-content:center;font-weight:760;font-size:14px;margin-bottom:15px}
+  .tile h3{font-size:16px; font-weight:660; margin-bottom:7px}
+  .tile p{font-size:13.5px; color:var(--dim); line-height:1.5}
+
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:30px;
+    box-shadow:0 1px 1px rgba(0,0,0,.02), 0 18px 40px -30px rgba(12,20,19,.3)}
+  .panel ul{list-style:none}
+  .panel li{display:flex; gap:13px; padding:13px 0; font-size:15.5px; color:var(--dim); line-height:1.5}
+  .panel li:not(:last-child){border-bottom:1px solid var(--border)}
+  .panel li .ic{color:var(--accent); font-weight:700; flex:none; margin-top:1px}
+  .panel li b{color:var(--ink)}
+
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; counter-reset:s}
+  .step{background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:20px}
+  .step .s{font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); margin-bottom:8px}
+  .step p{font-size:13.5px; color:var(--ink); font-weight:550; line-height:1.5}
+
+  /* возражения */
+  .faq{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .qa{background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:22px}
+  .qa h4{font-size:15px; font-weight:660; margin-bottom:8px}
+  .qa p{font-size:13.5px; color:var(--dim); line-height:1.55}
+
+  /* цена — плотная, без градиента */
+  .price-card{background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:38px 30px; text-align:center;
+    box-shadow:0 1px 1px rgba(0,0,0,.02), 0 26px 56px -30px rgba(12,20,19,.34); position:relative; overflow:hidden}
+  .price-card::before{content:""; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent)}
+  .price-card .vbefore{font-size:14.5px; color:var(--dim); max-width:480px; margin:0 auto 22px; line-height:1.55}
+  .price-card .amt{font-size:50px; font-weight:800; letter-spacing:-.045em; line-height:1}
+  .price-card .amt small{font-size:19px; font-weight:700; color:var(--dim)}
+  .price-card .credit{font-size:15px; color:var(--accent-d); font-weight:600; margin-top:14px}
+  .price-card .risk{font-size:14px; color:var(--dim); margin-top:8px}
+  .price-card .risk b{color:var(--ink)}
+  .price-card .btn{margin-top:24px}
+  .price-card .scarce{font-size:12.5px; color:var(--mute); margin-top:16px}
+
+  footer{text-align:center; color:var(--mute); font-size:12.5px; padding:20px 0 60px}
+
+  @media (max-width:680px){
+    .hero{padding:42px 0 42px; border-radius:0 0 26px 26px}
+    .hero h1{font-size:31px}
+    .hero p{max-width:100%; font-size:15.5px}
+    h2{font-size:23px}
+    .grid,.steps,.faq{grid-template-columns:1fr}
+    .panel,.price-card{padding:24px}
+    .price-card .amt{font-size:40px}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Бренд-разбор · около 60 минут</div>
+    <h1>За час покажу, где ваша клиника теряет пациентов — и как это исправить</h1>
+    <p>Разберу, почему пациенты «уходят подумать» и выбирают клинику дороже, и дам конкретный план: что поменять в упаковке, чтобы они больше доверяли, чаще принимали план лечения и спокойно соглашались на ваш чек. Уйдёте с картой действий — даже если работать дальше не будем.</p>
+    <div class="cta-row">
+      <a class="btn light" href="#zapis">Записаться на разбор →</a>
+      <span class="price-chip"><b>10 000 ₽</b> · зачитывается в стоимость проекта</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="eyebrow">Что вы получите</div>
+    <h2>Не «полезный созвон», а карта действий</h2>
+    <div class="grid">
+      <div class="tile"><div class="n">1</div><h3>3 точки утечки</h3><p>Где именно клиника теряет доверие пациента — на сайте, в соцсетях, на ресепшене, в том, как подаётся план лечения и цена.</p></div>
+      <div class="tile"><div class="n">2</div><h3>Сколько можно вернуть</h3><p>Оценка, насколько реально поднять долю принятых планов лечения и средний чек — если убрать «обычный» образ.</p></div>
+      <div class="tile"><div class="n">3</div><h3>Приоритетный план</h3><p>Что менять в первую очередь — по шагам, чтобы результат пришёл быстрее всего.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Для кого</div>
+    <div class="panel">
+      <ul>
+        <li><span class="ic">✓</span><div><b>Владелец клиники</b>, который вложил в оборудование и врачей — а сама клиника выглядит «как у всех» и не вызывает ощущения «дорого и надёжно».</div></li>
+        <li><span class="ic">✓</span><div>Замечает, что <b>пациенты приходят на консультацию, но уходят «подумать»</b> и выбирают клинику, которая смотрится солиднее.</div></li>
+        <li><span class="ic">✓</span><div>Хочет <b>поднять средний чек и загрузку</b> — но понимает, что упаковка пока этого не оправдывает.</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Как проходит</div>
+    <div class="steps">
+      <div class="step"><div class="s">Шаг 1</div><p>Короткая анкета о клинике и текущем потоке пациентов.</p></div>
+      <div class="step"><div class="s">Шаг 2</div><p>Созвон ~60 минут: разбираю упаковку по точкам утечки доверия.</p></div>
+      <div class="step"><div class="s">Шаг 3</div><p>Получаете карту действий и — по желанию — предложение по полному ребрендингу.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Чтобы не осталось сомнений</div>
+    <h2>Частые вопросы</h2>
+    <div class="faq">
+      <div class="qa"><h4>Почему платно, а не бесплатная консультация?</h4><p>Бесплатное обесценивается и собирает «просто поспрашивать». За эти деньги вы получаете не разговор, а готовый план — с ним можно работать самому, даже если мы дальше не продолжим.</p></div>
+      <div class="qa"><h4>Почему именно вы, а не мой дизайнер?</h4><p>Дизайнер нарисует красиво. Я разбираю бренд с точки зрения денег: где теряется доверие и какой именно элемент мешает пациенту согласиться на лечение.</p></div>
+      <div class="qa"><h4>У меня нет времени на долгие созвоны.</h4><p>Это один час. Уйдёте с конкретной картой действий, а не с «надо подумать». Если время дороже — это самый быстрый способ получить ответ.</p></div>
+      <div class="qa"><h4>А если не подойдёт?</h4><p>Не увидите ценности на разборе — верну деньги. Вы ничего не теряете.</p></div>
+    </div>
+  </section>
+
+  <section id="zapis">
+    <div class="price-card">
+      <div class="eyebrow" style="margin-bottom:16px">Стоимость</div>
+      <div class="vbefore">Час работы, разбор по точкам утечки и готовая карта действий, с которой клиника начинает зарабатывать больше с тех же пациентов.</div>
+      <div class="amt">10 000 <small>₽</small></div>
+      <div class="credit">Зачитывается в стоимость проекта — если идём дальше, разбор фактически бесплатный.</div>
+      <div class="risk">Не увидите ценности — <b>верну деньги</b>. Вы ничего не теряете.</div>
+      <a class="btn" href="#">Записаться на бренд-разбор →</a>
+      <div class="scarce">Беру ограниченное число разборов в неделю — чтобы каждый был глубоким.</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>Бренд-разбор для частных стоматологий · РФ и СНГ</footer>
+
+</body>
+</html>

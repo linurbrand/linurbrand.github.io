@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор недополученной выручки клиники</title>
+<style>
+  :root{
+    --bg:#f4f5f5; --card:#ffffff; --soft:#e9ecec;
+    --ink:#0c0f0f; --dim:#56625f; --mute:#98a3a0;
+    --border:rgba(0,0,0,.07); --border-s:rgba(0,0,0,.13);
+    --accent:#0f5e57; --accent-d:#0a4a44; --accent-bg:#eef4f3;
+    --dark:#0c1413; --loss:#ff6f5e;
+    --r:22px; --r-sm:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:-apple-system,"SF Pro Display","SF Pro Text","Inter",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5; letter-spacing:-.011em;
+    -webkit-font-smoothing:antialiased; padding:56px 20px 72px}
+  .wrap{max-width:660px; margin:0 auto}
+  .eyebrow{font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:18px}
+  h1{font-size:39px; line-height:1.1; font-weight:740; letter-spacing:-.035em; margin-bottom:18px}
+  .sub{font-size:16.5px; color:var(--dim); margin-bottom:40px; max-width:95%; line-height:1.55}
+
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--r);
+    box-shadow:0 1px 1px rgba(0,0,0,.02), 0 22px 50px -28px rgba(12,20,19,.30); padding:34px}
+
+  .ctrl{padding:24px 0; border-top:1px solid var(--border)}
+  .ctrl:first-child{padding-top:4px; border-top:none}
+  .ctrl .lab{display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin-bottom:16px}
+  .ctrl .lab .name{font-size:15.5px; font-weight:600; color:var(--ink); flex:1; min-width:0; line-height:1.35}
+  .ctrl .lab .val{font-size:19px; font-weight:760; color:var(--accent-d); letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums; white-space:nowrap}
+  .ctrl .hint{font-size:12.5px; color:var(--mute); margin-top:-8px; margin-bottom:14px}
+  input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:5px; border-radius:100px;
+    background:var(--soft); outline:none; cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; appearance:none; width:27px; height:27px;
+    border-radius:50%; background:#fff; border:1px solid var(--border-s);
+    box-shadow:0 3px 9px rgba(12,20,19,.20); cursor:pointer; transition:transform .12s}
+  input[type=range]::-webkit-slider-thumb:active{transform:scale(1.1)}
+  input[type=range]::-moz-range-thumb{width:27px;height:27px;border-radius:50%;background:#fff;
+    border:1px solid var(--border-s); box-shadow:0 3px 9px rgba(12,20,19,.20); cursor:pointer}
+  .ticks{display:flex; justify-content:space-between; margin-top:9px; font-size:11.5px; color:var(--mute)}
+
+  /* DARK result statement card — без градиентов */
+  .result{margin-top:30px; background:var(--dark); border-radius:var(--r-sm); padding:32px 30px; text-align:center; color:#fff}
+  .result .cap{font-size:12px; text-transform:uppercase; letter-spacing:.14em; font-weight:700; color:#7f8c89; margin-bottom:14px}
+  .result .big{font-size:50px; font-weight:800; letter-spacing:-.045em; line-height:1; color:#fff; font-variant-numeric:tabular-nums}
+  .result .big small{font-size:21px; font-weight:700; color:#9aa6a3}
+  .result .year{font-size:15px; color:#aab4b1; margin-top:14px}
+  .result .year b{color:#fff; font-variant-numeric:tabular-nums}
+  .result .spent{margin-top:18px; padding-top:16px; border-top:1px solid rgba(255,255,255,.10);
+    font-size:13px; color:#8b9794; line-height:1.5}
+
+  .bridge{margin-top:16px; padding:18px 22px; border:1px solid var(--border); border-radius:var(--r-sm);
+    background:var(--accent-bg); font-size:14.5px; color:var(--accent-d); line-height:1.55}
+  .bridge b{font-variant-numeric:tabular-nums; color:var(--accent-d)}
+
+  .cta{margin-top:32px; text-align:center}
+  .cta p{font-size:15.5px; color:var(--dim); margin-bottom:18px; line-height:1.55}
+  .cta p b{color:var(--ink)}
+  .btn{display:inline-flex; align-items:center; gap:9px; background:var(--accent); color:#fff;
+    font-size:16px; font-weight:600; padding:17px 32px; border-radius:100px; text-decoration:none;
+    box-shadow:0 10px 26px -10px rgba(15,94,87,.55); transition:transform .12s, box-shadow .12s}
+  .btn:hover{box-shadow:0 14px 30px -10px rgba(15,94,87,.6)}
+  .btn:active{transform:translateY(1px)}
+  .note{margin-top:20px; font-size:12px; color:var(--mute); text-align:center; line-height:1.55}
+
+  @media (max-width:600px){
+    body{padding:34px 16px 52px}
+    h1{font-size:29px}
+    .sub{font-size:15px; max-width:100%}
+    .card{padding:22px}
+    .result{padding:26px 20px}
+    .result .big{font-size:40px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Калькулятор · 2 минуты</div>
+  <h1>Сколько ваша клиника недозарабатывает на пациентах, которые «ушли подумать»</h1>
+  <p class="sub">Человек приходит на консультацию, выслушивает план лечения — и уходит «подумать». Часть таких пациентов можно вернуть: когда клиника воспринимается дороже и вызывает доверие, план лечения принимают чаще. Посчитайте, во сколько вам обходятся те, кто не вернулся.</p>
+
+  <div class="card">
+    <div class="ctrl">
+      <div class="lab"><span class="name">Новых пациентов в месяц</span><span class="val" id="v-pat">80</span></div>
+      <input type="range" id="pat" min="10" max="400" step="5" value="80">
+      <div class="ticks"><span>10</span><span>400</span></div>
+    </div>
+
+    <div class="ctrl">
+      <div class="lab"><span class="name">Средний чек</span><span class="val" id="v-check">30 000 ₽</span></div>
+      <input type="range" id="check" min="5000" max="150000" step="1000" value="30000">
+      <div class="ticks"><span>5 000 ₽</span><span>150 000 ₽</span></div>
+    </div>
+
+    <div class="ctrl">
+      <div class="lab"><span class="name">Сколько из них не доходят до лечения</span><span class="val" id="v-loss">50%</span></div>
+      <div class="hint">записались или пришли, но «ушли подумать» и не вернулись</div>
+      <input type="range" id="loss" min="20" max="70" step="5" value="50">
+      <div class="ticks"><span>20%</span><span>70%</span></div>
+    </div>
+
+    <div class="result">
+      <div class="cap">Недополученная выручка</div>
+      <div class="big"><span id="r-month">0</span> <small>₽ / мес</small></div>
+      <div class="year">это <b id="r-year">0</b> ₽ в год</div>
+      <div class="spent">А на привлечение этих пациентов вы уже потратили рекламный бюджет — 2 000–5 000 ₽ за каждого. Он сгорает вместе с ними.</div>
+    </div>
+
+    <div class="bridge">Сильный бренд возвращает часть таких пациентов: они больше доверяют клинике и чаще соглашаются на лечение. Вернуть хотя бы половину = <b id="r-half">0</b> ₽/мес — без рубля в дополнительную рекламу.</div>
+
+    <div class="cta">
+      <p><b>Хотите увидеть, где именно ваша клиника теряет этих пациентов?</b><br>За час разберу вашу клинику и дам конкретный план.</p>
+      <a class="btn" href="../razbor/">Записаться на бренд-разбор →</a>
+    </div>
+  </div>
+
+  <p class="note">Расчёт оценочный, по вашим вводным — чтобы увидеть порядок цифр, а не точную сумму до рубля.</p>
+</div>
+
+<script>
+  const fmt = n => Math.round(n).toLocaleString('ru-RU');
+  const $ = id => document.getElementById(id);
+  const els = { pat:$('pat'), check:$('check'), loss:$('loss'),
+    vPat:$('v-pat'), vCheck:$('v-check'), vLoss:$('v-loss'),
+    rMonth:$('r-month'), rYear:$('r-year'), rHalf:$('r-half') };
+  let cur = 0, raf = null;
+  function animate(to){
+    cancelAnimationFrame(raf);
+    const from = cur, start = performance.now(), dur = 450;
+    function step(t){
+      const p = Math.min((t-start)/dur, 1), e = 1-Math.pow(1-p,3);
+      cur = from + (to-from)*e;
+      els.rMonth.textContent = fmt(cur);
+      if(p<1) raf = requestAnimationFrame(step); else cur = to;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  function calc(){
+    const pat = +els.pat.value, check = +els.check.value, loss = +els.loss.value;
+    els.vPat.textContent = pat;
+    els.vCheck.textContent = fmt(check)+' ₽';
+    els.vLoss.textContent = loss+'%';
+    const month = pat * (loss/100) * check;
+    animate(month);
+    els.rYear.textContent = fmt(month*12);
+    els.rHalf.textContent = fmt(month*0.5);
+  }
+  ['pat','check','loss'].forEach(id => els[id].addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>

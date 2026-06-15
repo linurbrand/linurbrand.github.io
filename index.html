@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Линур — бренды для частных клиник</title>
+<style>
+  :root{ --bg:#0c1413; --ink:#ffffff; --dim:#aebbb8; --accent:#2dd4bf; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{font-family:-apple-system,"SF Pro Display","Inter",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); letter-spacing:-.02em;
+    -webkit-font-smoothing:antialiased; display:flex; align-items:center; justify-content:center;
+    min-height:100vh; padding:32px; text-align:center; position:relative; overflow:hidden}
+  body::before{content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,transparent,var(--accent) 40%,#1f8d82 60%,transparent)}
+  .wrap{max-width:560px}
+  .mark{font-size:13px; letter-spacing:.32em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:26px}
+  h1{font-size:52px; font-weight:760; letter-spacing:-.04em; line-height:1.05; margin-bottom:20px}
+  p{font-size:18px; color:var(--dim); line-height:1.55}
+  .soon{margin-top:34px; font-size:13px; color:#5f6e6b; letter-spacing:.04em}
+  @media(max-width:600px){ h1{font-size:38px} p{font-size:16px} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark">Линур</div>
+    <h1>Бренды, которые приводят пациентов</h1>
+    <p>Брендинг и упаковка частных клиник — чтобы выглядеть дорого, вызывать доверие и заполнять кресла платёжеспособными пациентами.</p>
+    <div class="soon">Сайт в разработке</div>
+  </div>
+</body>
+</html>
