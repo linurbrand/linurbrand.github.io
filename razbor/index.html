@@ -156,7 +156,8 @@
     <div class="price-card">
       <div class="eyebrow" style="margin-bottom:16px">Стоимость</div>
       <div class="vbefore">Час работы, разбор по точкам утечки и готовая карта действий, с которой стоматология начинает зарабатывать больше с тех же пациентов.</div>
-      <div class="amt">10 000 <small>₽</small></div>
+      <div class="amt"><span id="price-old" style="display:none;text-decoration:line-through;color:#9aa0a6;font-size:.5em;font-weight:400;margin-right:14px;vertical-align:middle">15 000 ₽</span><span id="price-now">15 000</span> <small>₽</small></div>
+      <div id="promo-timer" style="display:none;margin:14px auto 0;max-width:max-content;background:#fdf1ea;color:#b3431b;border:1px solid #f0d2bf;border-radius:12px;padding:10px 18px;font-weight:600;font-size:16px"></div>
       <div class="credit">Зачитывается в стоимость проекта — если идём дальше, разбор фактически бесплатный.</div>
       <div class="risk">Не увидите ценности — <b>верну деньги</b>. Вы ничего не теряете.</div>
       <a class="btn" href="https://t.me/LinurGaynullinBot?start=razbor">Записаться на бренд-разбор →</a>
@@ -167,6 +168,27 @@
 </div>
 
 <footer>Бренд-разбор для частных стоматологий · РФ и СНГ</footer>
+
+<script>
+(function(){
+  if(!new URLSearchParams(location.search).has('promo')) return;
+  var KEY='razbor_promo_deadline';
+  var dl=parseInt(localStorage.getItem(KEY)||'0',10);
+  if(!dl||isNaN(dl)){ dl=Date.now()+24*3600*1000; localStorage.setItem(KEY,String(dl)); }
+  var oldEl=document.getElementById('price-old'), nowEl=document.getElementById('price-now'), tEl=document.getElementById('promo-timer');
+  function pad(n){return (n<10?'0':'')+n;}
+  function tick(){
+    var left=dl-Date.now();
+    if(left<=0){ nowEl.textContent='15 000'; oldEl.style.display='none'; tEl.style.display='none'; return; }
+    oldEl.style.display=''; nowEl.textContent='10 000';
+    var h=Math.floor(left/3600000), m=Math.floor(left%3600000/60000), s=Math.floor(left%60000/1000);
+    tEl.style.display='inline-block';
+    tEl.innerHTML='🔥 Скидка 10 000 ₽ действует ещё <b>'+pad(h)+':'+pad(m)+':'+pad(s)+'</b>';
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+</script>
 
 </body>
 </html>
