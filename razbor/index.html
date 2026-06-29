@@ -160,7 +160,7 @@
       <div id="promo-timer" style="display:none;margin:14px auto 0;max-width:max-content;background:#fdf1ea;color:#b3431b;border:1px solid #f0d2bf;border-radius:12px;padding:10px 18px;font-weight:600;font-size:16px"></div>
       <div class="credit">Зачитывается в стоимость проекта — если идём дальше, разбор фактически бесплатный.</div>
       <div class="risk">Не увидите ценности — <b>верну деньги</b>. Вы ничего не теряете.</div>
-      <a class="btn" href="https://t.me/LinurGaynullinBot?start=razbor">Записаться на бренд-разбор →</a>
+      <a class="btn" id="book-btn" href="https://t.me/iamlinur?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%9B%D0%B8%D0%BD%D1%83%D1%80%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D1%80%D0%B5%D0%BD%D0%B4-%D1%80%D0%B0%D0%B7%D0%B1%D0%BE%D1%80%20%D1%81%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8.%20%D0%9F%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5%2C%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0%20%D0%B2%D0%B0%D0%BC%20%D1%83%D0%B4%D0%BE%D0%B1%D0%BD%D0%BE%3F">Записаться на бренд-разбор →</a>
       <div class="scarce">Беру ограниченное число разборов в неделю — чтобы каждый был глубоким.</div>
     </div>
   </section>
@@ -175,6 +175,7 @@
   var KEY='razbor_promo_deadline';
   var dl=parseInt(localStorage.getItem(KEY)||'0',10);
   if(!dl||isNaN(dl)){ dl=Date.now()+24*3600*1000; localStorage.setItem(KEY,String(dl)); }
+  var bb=document.getElementById('book-btn'); if(bb) bb.href='https://t.me/iamlinur?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%9B%D0%B8%D0%BD%D1%83%D1%80%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D1%80%D0%B5%D0%BD%D0%B4-%D1%80%D0%B0%D0%B7%D0%B1%D0%BE%D1%80%20%D0%BF%D0%BE%20%D1%81%D0%BF%D0%B5%D1%86%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8E%20%2810%20000%20%E2%82%BD%29.%20%D0%9F%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5%2C%20%D0%BA%D0%BE%D0%B3%D0%B4%D0%B0%20%D0%B2%D0%B0%D0%BC%20%D1%83%D0%B4%D0%BE%D0%B1%D0%BD%D0%BE%3F';
   var oldEl=document.getElementById('price-old'), nowEl=document.getElementById('price-now'), tEl=document.getElementById('promo-timer');
   function pad(n){return (n<10?'0':'')+n;}
   function tick(){
